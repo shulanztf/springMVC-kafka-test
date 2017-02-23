@@ -40,5 +40,6 @@
 		<property name="producerListener" ref="producerListener" />
 	</bean>
 
-	<bean id="producerListener" class="com.git.kafka.producer.KafkaProducerListener" />
+	<bean id="producerListener" class="com.interceptors.KafkaProducerListener" />
+
 </beans>

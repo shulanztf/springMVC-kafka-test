@@ -1,4 +1,4 @@
-package com.git.kafka.producer;
+package com.hhcf.service;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.SendResult;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.util.concurrent.ListenableFuture;
 
 import com.alibaba.fastjson.JSON;
@@ -16,13 +17,15 @@ import com.constant.KafkaMesConstant;
 
 /**
  * 
- * @ClassName: KafkaProducerServer
- * @Description: kafkaProducer模板 使用此模板发送消息
- * @author: zhaotf
- * @date: 2017年2月22日 下午9:05:12
+ * @Title: KafkaProducerServerImpl
+ * @Description:
+ * @Author: zhaotf
+ * @Since:2017年2月23日 上午10:52:25
+ * @Version:1.0
  */
+@Service("kafkaProducerServer")
 @Component
-public class KafkaProducerServer {
+public class KafkaProducerServerImpl implements KafkaProducerServer {
 	@Autowired
 	private KafkaTemplate<String, String> kafkaTemplate;
 
@@ -40,23 +43,24 @@ public class KafkaProducerServer {
 	 * @param role
 	 *            角色:bbc app erp...
 	 */
-	public Map<String, Object> sndMesForTemplate(String topic, Object value,
-			String ifPartition, Integer partitionNum, String role) {
+	@Override
+	public Map<String, Object> sndMesForTemplate(String topic, Object value, String ifPartition, Integer partitionNum,
+			String role) {
 		String key = role + "-" + value.hashCode();
 		String valueString = JSON.toJSONString(value);
+		System.out.println("消息中间件：kafka 生产端：" + key + ";" + valueString + ";" + ifPartition + ";" + partitionNum);
+
+		ListenableFuture<SendResult<String, String>> result = null;
 		if (ifPartition.equals("0")) {
 			// 表示使用分区
 			int partitionIndex = getPartitionIndex(key, partitionNum);
-			ListenableFuture<SendResult<String, String>> result = kafkaTemplate
-					.send(topic, partitionIndex, key, valueString);
-			Map<String, Object> res = checkProRecord(result);
-			return res;
+			result = kafkaTemplate.send(topic, partitionIndex, key, valueString);
 		} else {
-			ListenableFuture<SendResult<String, String>> result = kafkaTemplate
-					.send(topic, key, valueString);
-			Map<String, Object> res = checkProRecord(result);
-			return res;
+			result = kafkaTemplate.send(topic, key, valueString);
 		}
+		Map<String, Object> res = checkProRecord(result);
+		System.out.println("消息中间件：kafka 生产端：" + res);
+		return res;
 	}
 
 	/**
@@ -83,8 +87,7 @@ public class KafkaProducerServer {
 	 * @return
 	 */
 	@SuppressWarnings("rawtypes")
-	private Map<String, Object> checkProRecord(
-			ListenableFuture<SendResult<String, String>> res) {
+	private Map<String, Object> checkProRecord(ListenableFuture<SendResult<String, String>> res) {
 		Map<String, Object> m = new HashMap<String, Object>();
 		if (res != null) {
 			try {
@@ -117,4 +120,5 @@ public class KafkaProducerServer {
 			return m;
 		}
 	}
+
 }

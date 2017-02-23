@@ -1,4 +1,4 @@
-package com.git.kafka.producer;
+package com.interceptors;
 
 import org.apache.kafka.clients.producer.RecordMetadata;
 import org.slf4j.Logger;
@@ -20,8 +20,7 @@ public class KafkaProducerListener implements ProducerListener {
 	 * 发送消息成功后调用
 	 */
 	@Override
-	public void onSuccess(String topic, Integer partition, Object key,
-			Object value, RecordMetadata recordMetadata) {
+	public void onSuccess(String topic, Integer partition, Object key, Object value, RecordMetadata recordMetadata) {
 		LOG.info("==========kafka发送数据成功（日志开始）==========");
 		LOG.info("----------topic:" + topic);
 		LOG.info("----------partition:" + partition);
@@ -35,8 +34,7 @@ public class KafkaProducerListener implements ProducerListener {
 	 * 发送消息错误后调用
 	 */
 	@Override
-	public void onError(String topic, Integer partition, Object key,
-			Object value, Exception exception) {
+	public void onError(String topic, Integer partition, Object key, Object value, Exception exception) {
 		LOG.info("==========kafka发送数据错误（日志开始）==========");
 		LOG.info("----------topic:" + topic);
 		LOG.info("----------partition:" + partition);

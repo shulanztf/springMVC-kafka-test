@@ -1,5 +1,6 @@
 package com.hhcf.crotroller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -7,6 +8,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.alibaba.fastjson.JSON;
 import com.dubbo.TestRegistryService;
+import com.hhcf.service.KafkaProducerServer;
 
 /**
  * 
@@ -22,14 +24,34 @@ public class ConsumerCrotroller {
 	@Reference
 	private TestRegistryService testRegistryService;
 
+	@Autowired
+	private KafkaProducerServer kafkaProducerServer;
+
+	/**
+	 * 通过kafka改善消息
+	 * 
+	 * @return Object
+	 */
+	@RequestMapping("/sndMesForTemplate")
+	@ResponseBody
+	public Object sndMesForTemplate() {
+		String topic = "orderTopic";
+		String value = "test";
+		String ifPartition = "0";
+		Integer partitionNum = 3;
+		String role = "test";// 用来生成key
+		return kafkaProducerServer.sndMesForTemplate(topic, value, ifPartition, partitionNum, role);
+	}
+
 	// @Reference
 	// private UserService userService;
 
 	@RequestMapping("/getDubboServerData")
 	@ResponseBody
 	public String getDubboServerData() {
-		String hello = testRegistryService.hello("dubbo 消费端-1");
-		System.out.println(hello);
+		// String hello = testRegistryService.hello("dubbo 消费端-1");
+		// System.out.println(hello);
+		String hello = "消息中间件 kafka 生产端-1";
 		return hello;
 	}
 

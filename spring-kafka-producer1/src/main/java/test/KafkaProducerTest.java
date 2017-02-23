@@ -2,7 +2,7 @@ package test;
 
 import java.util.Map;
 
-import com.git.kafka.producer.KafkaProducerServer;
+import com.hhcf.service.KafkaProducerServerImpl;
 
 /**
  * 
@@ -15,7 +15,7 @@ public class KafkaProducerTest {
 
 	public static void main(String[] args) {
 
-		KafkaProducerServer kafkaProducer = new KafkaProducerServer();
+		KafkaProducerServerImpl kafkaProducer = new KafkaProducerServerImpl();
 		String topic = "orderTopic";
 		String value = "test";
 		String ifPartition = "0";

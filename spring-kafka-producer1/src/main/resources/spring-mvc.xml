@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jee="http://www.springframework.org/schema/jee"
-	xmlns:mvc="http://www.springframework.org/schema/mvc" 
-	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:tx="http://www.springframework.org/schema/tx"
 	xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans 
 	http://www.springframework.org/schema/beans/spring-beans.xsd 
@@ -11,12 +10,9 @@
 	http://www.springframework.org/schema/jee 
 	http://www.springframework.org/schema/jee/spring-jee.xsd
 	http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd 
-	http://code.alibabatech.com/schema/dubbo
-	http://code.alibabatech.com/schema/dubbo/dubbo.xsd
 	http://www.springframework.org/schema/context
 	http://www.springframework.org/schema/context/spring-context.xsd
-	http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd"
-	default-lazy-init="false">
+	http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd">
 
 	<!-- 自动扫描controller包下的所有类，使其认为spring mvc的控制器 -->
 	<!-- 加载controller的时候,不加载service,因为此时事物并未生效,若此时加载了service,那么事物无法对service进行拦截 -->
@@ -25,12 +21,21 @@
 			expression="org.springframework.stereotype.Service" />
 	</context:component-scan>
 
+	<!-- 真心帮 -->
+	<context:component-scan base-package="com.hhcf.*">
+		<!-- 
+		<context:exclude-filter type="annotation"
+			expression="org.springframework.stereotype.Service" />
+		 -->
+	</context:component-scan>
+	<!-- 真心帮 END -->
+
 	<!-- ApplicationContext -->
 	<bean class="com.core.util.ApplicationContextUtil"></bean>
 
 	<!-- 避免IE执行AJAX时,返回JSON出现下载文件 -->
 	<bean id="mappingJacksonHttpMessageConverter"
-		class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter">
+		class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
 		<property name="supportedMediaTypes">
 			<list>
 				<value>text/html;charset=UTF-8</value>
