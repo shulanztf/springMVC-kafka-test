@@ -36,7 +36,7 @@ public class ConsumerCrotroller {
 	@ResponseBody
 	public Object sndMesForTemplate() {
 		String topic = "orderTopic";
-		String value = "test";
+		String value = "test,kafka 生产端测试，工工aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
 		String ifPartition = "1";//是否使用分区 0是\1不是
 		Integer partitionNum = 3;
 		String role = "test";// 用来生成key

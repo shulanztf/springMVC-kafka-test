@@ -15,7 +15,7 @@
 	<bean id="consumerProperties" class="java.util.HashMap">
 		<constructor-arg>
 			<map>
-				<entry key="bootstrap.servers" value="127.0.0.1:7000" />
+				<entry key="bootstrap.servers" value="192.168.159.139:9092" />
 				<entry key="group.id" value="0" />
 				<entry key="enable.auto.commit" value="false" />
 				<entry key="auto.commit.interval.ms" value="1000" />
@@ -37,18 +37,18 @@
 	</bean>
 
 	<!-- 实际执行消息消费的类 -->
-	<bean id="messageListernerConsumerService" class="com.git.kafka.consumer.KafkaConsumerServer" />
+	<bean id="messageListernerConsumerListener" class="com.interceptors.KafkaConsumerListener" />
 
 	<!-- 消费者容器配置信息 -->
 	<bean id="containerProperties_trade"
 		class="org.springframework.kafka.listener.config.ContainerProperties">
 		<constructor-arg value="order_test_topic" />
-		<property name="messageListener" ref="messageListernerConsumerService" />
+		<property name="messageListener" ref="messageListernerConsumerListener" />
 	</bean>
 	<bean id="containerProperties_other"
 		class="org.springframework.kafka.listener.config.ContainerProperties">
 		<constructor-arg value="other_test_topic" />
-		<property name="messageListener" ref="messageListernerConsumerService" />
+		<property name="messageListener" ref="messageListernerConsumerListener" />
 	</bean>
 
 	<!-- 创建messageListenerContainer bean，使用的时候，只需要注入这个bean -->
@@ -67,4 +67,3 @@
 	</bean>
 
 </beans>
-F
