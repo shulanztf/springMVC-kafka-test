@@ -1,5 +1,7 @@
 package test;
 
+import java.util.Map;
+
 import com.git.kafka.producer.KafkaProducerServer;
 
 /**
@@ -19,8 +21,7 @@ public class KafkaProducerTest {
 		String ifPartition = "0";
 		Integer partitionNum = 3;
 		String role = "test";// 用来生成key
-		Map<String, Object> res = kafkaProducer.sndMesForTemplate(topic, value,
-				ifPartition, partitionNum, role);
+		Map<String, Object> res = kafkaProducer.sndMesForTemplate(topic, value, ifPartition, partitionNum, role);
 
 		System.out.println("测试结果如下：===============");
 		String message = (String) res.get("message");

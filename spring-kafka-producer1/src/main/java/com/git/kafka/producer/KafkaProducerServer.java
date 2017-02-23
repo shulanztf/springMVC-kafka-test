@@ -11,10 +11,7 @@ import org.springframework.kafka.support.SendResult;
 import org.springframework.stereotype.Component;
 import org.springframework.util.concurrent.ListenableFuture;
 
-
-
-import scala.util.parsing.json.JSON;
-
+import com.alibaba.fastjson.JSON;
 import com.constant.KafkaMesConstant;
 
 /**
