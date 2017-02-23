@@ -37,7 +37,7 @@ public class ConsumerCrotroller {
 	public Object sndMesForTemplate() {
 		String topic = "orderTopic";
 		String value = "test";
-		String ifPartition = "0";
+		String ifPartition = "1";//是否使用分区 0是\1不是
 		Integer partitionNum = 3;
 		String role = "test";// 用来生成key
 		return kafkaProducerServer.sndMesForTemplate(topic, value, ifPartition, partitionNum, role);
