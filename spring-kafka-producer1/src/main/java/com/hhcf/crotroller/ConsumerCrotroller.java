@@ -5,9 +5,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.alibaba.dubbo.config.annotation.Reference;
-import com.alibaba.fastjson.JSON;
-import com.dubbo.TestRegistryService;
 import com.hhcf.service.KafkaProducerServer;
 
 /**
@@ -20,9 +17,6 @@ import com.hhcf.service.KafkaProducerServer;
 @Controller
 @RequestMapping("/consumerCrotroller")
 public class ConsumerCrotroller {
-	// @Autowired
-	@Reference
-	private TestRegistryService testRegistryService;
 
 	@Autowired
 	private KafkaProducerServer kafkaProducerServer;
@@ -37,7 +31,7 @@ public class ConsumerCrotroller {
 	public Object sndMesForTemplate() {
 		String topic = "orderTopic";
 		String value = "test,kafka 生产端测试，工工aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
-		String ifPartition = "1";//是否使用分区 0是\1不是
+		String ifPartition = "1";// 是否使用分区 0是\1不是
 		Integer partitionNum = 3;
 		String role = "test";// 用来生成key
 		return kafkaProducerServer.sndMesForTemplate(topic, value, ifPartition, partitionNum, role);
@@ -62,37 +56,10 @@ public class ConsumerCrotroller {
 	@RequestMapping("/goIndex")
 	@ResponseBody
 	public String goIndex() {
-		Object resultBean = testRegistryService.setDate("15456235896");
-		System.out.println(JSON.toJSONString(resultBean));
-		return JSON.toJSONString(resultBean);
+		// Object resultBean = testRegistryService.setDate("15456235896");
+		// System.out.println(JSON.toJSONString(resultBean));
+		// return JSON.toJSONString(resultBean);
+		return "goIndex中文 测试";
 	}
 
-	// @RequestMapping("/list")
-	// @ResponseBody
-	// public List<User> getUsers() {
-	// return userService.getUsers();
-	// }
-	//
-	// @RequestMapping("/one")
-	// @ResponseBody
-	// public User getUserById() {
-	// return userService.getUserByPrimaryKey("1");
-	// }
-
-	// public static void main(String[] args) throws Exception {
-	// ClassPathXmlApplicationContext context = new
-	// ClassPathXmlApplicationContext(
-	// new String[] { "spring-dubbo.xml" });
-	// context.start();
-	//
-	// TestRegistryService testRegistryService = (TestRegistryService) context
-	// .getBean("testRegistryService");
-	// for (int i = 0; i < 10; i++) {
-	// String hello = testRegistryService.hello("dubbo 消费端-1，");
-	// System.out.println("次数" + i + ";" + hello);
-	//
-	// }
-	//
-	// System.in.read();
-	// }
 }
