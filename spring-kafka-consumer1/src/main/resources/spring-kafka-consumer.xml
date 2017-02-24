@@ -21,7 +21,7 @@
 				<entry key="auto.commit.interval.ms" value="1000" />
 				<entry key="session.timeout.ms" value="15000" />
 				<entry key="key.deserializer"
-					value="org.apache.kafka.common.serialization.IntegerDeserializer" />
+					value="org.apache.kafka.common.serialization.StringDeserializer" />
 				<entry key="value.deserializer"
 					value="org.apache.kafka.common.serialization.StringDeserializer" />
 			</map>
@@ -40,30 +40,18 @@
 	<bean id="messageListernerConsumerListener" class="com.interceptors.KafkaConsumerListener" />
 
 	<!-- 消费者容器配置信息 -->
-	<bean id="containerProperties_trade"
+	<bean id="containerProperties"
 		class="org.springframework.kafka.listener.config.ContainerProperties">
-		<constructor-arg value="order_test_topic" />
-		<property name="messageListener" ref="messageListernerConsumerListener" />
-	</bean>
-	<bean id="containerProperties_other"
-		class="org.springframework.kafka.listener.config.ContainerProperties">
-		<constructor-arg value="other_test_topic" />
+		<constructor-arg value="ztfTopic" />
 		<property name="messageListener" ref="messageListernerConsumerListener" />
 	</bean>
 
 	<!-- 创建messageListenerContainer bean，使用的时候，只需要注入这个bean -->
-	<bean id="messageListenerContainer_trade"
+	<bean id="kafkaMessageListenerContainer"
 		class="org.springframework.kafka.listener.KafkaMessageListenerContainer"
 		init-method="doStart">
 		<constructor-arg ref="consumerFactory" />
-		<constructor-arg ref="containerProperties_trade" />
-	</bean>
-
-	<bean id="messageListenerContainer_other"
-		class="org.springframework.kafka.listener.KafkaMessageListenerContainer"
-		init-method="doStart">
-		<constructor-arg ref="consumerFactory" />
-		<constructor-arg ref="containerProperties_other" />
+		<constructor-arg ref="containerProperties" />
 	</bean>
 
 </beans>

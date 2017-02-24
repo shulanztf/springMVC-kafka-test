@@ -29,12 +29,35 @@ public class ConsumerCrotroller {
 	@RequestMapping("/sndMesForTemplate")
 	@ResponseBody
 	public Object sndMesForTemplate() {
-		String topic = "orderTopic";
+		String topic = "ztfTopic";
 		String value = "test,kafka 生产端测试，工工aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
 		String ifPartition = "1";// 是否使用分区 0是\1不是
 		Integer partitionNum = 3;
 		String role = "test";// 用来生成key
 		return kafkaProducerServer.sndMesForTemplate(topic, value, ifPartition, partitionNum, role);
+	}
+
+	/**
+	 * 模拟kafka官方示例：生产端
+	 * 
+	 * @return Object
+	 */
+	@RequestMapping("/sndMsg")
+	@ResponseBody
+	public Object sndMsg() {
+		kafkaProducerServer.sendMessage("ztfTopic", "keyztf", "test,kafka 生产端测试，工工aaaaaaaaaaaaaa");
+		return "aaa";
+	}
+
+	/**
+	 * 模拟kafka官方示例：消费端
+	 * 
+	 * @return Object
+	 */
+	@RequestMapping("/getMsg")
+	@ResponseBody
+	public Object getMsg() {
+		return kafkaProducerServer.getMsg();
 	}
 
 	// @Reference

@@ -33,10 +33,10 @@
 	</bean>
 
 	<!-- 创建kafkatemplate bean，使用的时候，只需要注入这个bean，即可使用template的send消息方法 -->
-	<bean id="KafkaTemplate" class="org.springframework.kafka.core.KafkaTemplate">
+	<bean id="kafkaTemplate" class="org.springframework.kafka.core.KafkaTemplate">
 		<constructor-arg ref="producerFactory" />
 		<constructor-arg name="autoFlush" value="true" />
-		<property name="defaultTopic" value="defaultTopic" />
+		<property name="defaultTopic" value="ztfTopic" />
 		<property name="producerListener" ref="producerListener" />
 	</bean>
 

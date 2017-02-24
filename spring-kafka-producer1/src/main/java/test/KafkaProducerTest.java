@@ -1,8 +1,11 @@
 package test;
 
-import java.util.Map;
-
-import com.hhcf.service.KafkaProducerServerImpl;
+//import org.junit.Test;
+//import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.kafka.core.KafkaTemplate;
+//import org.springframework.test.context.ContextConfiguration;
+//import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 /**
  * 
@@ -11,23 +14,14 @@ import com.hhcf.service.KafkaProducerServerImpl;
  * @author: zhaotf
  * @date: 2017年2月22日 下午9:47:07
  */
+// @RunWith(SpringJUnit4ClassRunner.class)
+// @ContextConfiguration(locations = "classpath*:spring/spring-producer.xml")
 public class KafkaProducerTest {
+	@Autowired
+	private KafkaTemplate<Integer, String> kafkaTemplate;
 
-	public static void main(String[] args) {
-
-		KafkaProducerServerImpl kafkaProducer = new KafkaProducerServerImpl();
-		String topic = "orderTopic";
-		String value = "test";
-		String ifPartition = "0";
-		Integer partitionNum = 3;
-		String role = "test";// 用来生成key
-		Map<String, Object> res = kafkaProducer.sndMesForTemplate(topic, value, ifPartition, partitionNum, role);
-
-		System.out.println("测试结果如下：===============");
-		String message = (String) res.get("message");
-		String code = (String) res.get("code");
-
-		System.out.println("code:" + code);
-		System.out.println("message:" + message);
+	// @Test
+	public void testTemplateSend() {
+		kafkaTemplate.send("test1", "www.656463.com");
 	}
 }
