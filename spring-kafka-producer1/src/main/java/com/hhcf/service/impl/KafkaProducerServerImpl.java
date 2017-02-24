@@ -1,18 +1,10 @@
 package com.hhcf.service.impl;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Properties;
 import java.util.Random;
 import java.util.concurrent.ExecutionException;
 
-import org.apache.kafka.clients.consumer.ConsumerRecord;
-import org.apache.kafka.clients.consumer.ConsumerRecords;
-import org.apache.kafka.clients.consumer.KafkaConsumer;
-import org.apache.kafka.clients.producer.KafkaProducer;
-import org.apache.kafka.clients.producer.Producer;
-import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -40,22 +32,6 @@ public class KafkaProducerServerImpl implements KafkaProducerServer {
 	@Autowired
 	private KafkaTemplate<String, String> kafkaTemplate;
 
-	/**
-	 * 消费生产端
-	 */
-	@Override
-	public Object sndMesForTemplate() {
-		return null;
-	}
-
-	/**
-	 * 消息消费端
-	 */
-	@Override
-	public Object getMsg() {
-		return null;
-	}
-
 	@Override
 	public void sendMessage(String topic, String data) {
 		kafkaTemplate.setDefaultTopic(topic);
@@ -65,8 +41,8 @@ public class KafkaProducerServerImpl implements KafkaProducerServer {
 	@Override
 	public void sendMessage(String topic, String key, String data) {
 		kafkaTemplate.setDefaultTopic(topic);
-		for (int i = 0; i < 100; i++) {
-			ListenableFuture<SendResult<String, String>> rlst = kafkaTemplate.send(topic, 1, key + i, data + i);
+		for (int i = 0; i < 3; i++) {
+			ListenableFuture<SendResult<String, String>> rlst = kafkaTemplate.send(topic, key + i, data + i);
 			System.out.println(JSON.toJSONString(rlst));
 		}
 	}
@@ -94,7 +70,7 @@ public class KafkaProducerServerImpl implements KafkaProducerServer {
 
 		ListenableFuture<SendResult<String, String>> result = null;
 
-		for (int i = 0; i < 200; i++) {
+		for (int i = 0; i < 3; i++) {
 			if (ifPartition.equals("0")) {
 				// 表示使用分区
 				int partitionIndex = getPartitionIndex(key, partitionNum);
@@ -104,11 +80,7 @@ public class KafkaProducerServerImpl implements KafkaProducerServer {
 			}
 		}
 
-		kafkaTemplate.setDefaultTopic(topic);
-
-		// result = kafkaTemplate.send(topic, "消息中间件：kafka 生产端：");
 		Map<String, Object> res = checkProRecord(result);
-
 		logger.info("消息中间件：kafka 生产端：" + JSON.toJSONString(result));
 		logger.info("消息中间件：kafka 生产端：" + JSON.toJSONString(res));
 

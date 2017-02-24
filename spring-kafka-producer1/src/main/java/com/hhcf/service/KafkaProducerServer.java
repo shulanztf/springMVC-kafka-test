@@ -28,10 +28,6 @@ public interface KafkaProducerServer {
 	public Map<String, Object> sndMesForTemplate(String topic, Object value, String ifPartition, Integer partitionNum,
 			String role);
 
-	public Object sndMesForTemplate();
-
-	public Object getMsg();
-
 	public void sendMessage(String topic, String data);
 
 	public void sendMessage(String topic, String key, String data);

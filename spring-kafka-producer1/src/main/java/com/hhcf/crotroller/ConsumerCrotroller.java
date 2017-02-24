@@ -49,17 +49,6 @@ public class ConsumerCrotroller {
 		return "aaa";
 	}
 
-	/**
-	 * 模拟kafka官方示例：消费端
-	 * 
-	 * @return Object
-	 */
-	@RequestMapping("/getMsg")
-	@ResponseBody
-	public Object getMsg() {
-		return kafkaProducerServer.getMsg();
-	}
-
 	// @Reference
 	// private UserService userService;
 
