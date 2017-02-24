@@ -45,7 +45,7 @@ public class ConsumerCrotroller {
 	@RequestMapping("/sndMsg")
 	@ResponseBody
 	public Object sndMsg() {
-		kafkaProducerServer.sendMessage("ztfTopic", "keyztf", "test,kafka 生产端测试，工工aaaaaaaaaaaaaa");
+		kafkaProducerServer.sendMessage("hhcfTopic", "keyztf", "test,kafka 生产端测试，工工aaaaaaaaaaaaaa");
 		return "aaa";
 	}
 

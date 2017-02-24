@@ -40,7 +40,6 @@ public class KafkaProducerServerImpl implements KafkaProducerServer {
 
 	@Override
 	public void sendMessage(String topic, String key, String data) {
-		kafkaTemplate.setDefaultTopic(topic);
 		for (int i = 0; i < 3; i++) {
 			ListenableFuture<SendResult<String, String>> rlst = kafkaTemplate.send(topic, key + i, data + i);
 			System.out.println(JSON.toJSONString(rlst));
@@ -69,7 +68,6 @@ public class KafkaProducerServerImpl implements KafkaProducerServer {
 		logger.info("消息中间件：kafka 生产端：" + key + ";" + valueString + ";" + ifPartition + ";" + partitionNum);
 
 		ListenableFuture<SendResult<String, String>> result = null;
-
 		for (int i = 0; i < 3; i++) {
 			if (ifPartition.equals("0")) {
 				// 表示使用分区
