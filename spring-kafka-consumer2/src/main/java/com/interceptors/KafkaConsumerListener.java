@@ -23,11 +23,11 @@ public class KafkaConsumerListener implements MessageListener<String, String> {
 	 */
 	@Override
 	public void onMessage(ConsumerRecord<String, String> record) {
-		logger.info("kafkaConsumer 1 开始消费，键:" + JSON.toJSONString(record.key()));
-		logger.info("kafkaConsumer 1 开始消费，内容:" + JSON.toJSONString(record.value()));
-		logger.info("kafkaConsumer 1 开始消费，topic:" + JSON.toJSONString(record.topic()));
-		logger.info("kafkaConsumer 1 开始消费，offset:" + JSON.toJSONString(record.offset()));
-		logger.info("kafkaConsumer 1 开始消费，partition:" + JSON.toJSONString(record.partition()));
+		logger.info("kafkaConsumer 2 开始消费，键:" + JSON.toJSONString(record.key()));
+		logger.info("kafkaConsumer 2 开始消费，内容:" + JSON.toJSONString(record.value()));
+		logger.info("kafkaConsumer 2 开始消费，topic:" + JSON.toJSONString(record.topic()));
+		logger.info("kafkaConsumer 2 开始消费，offset:" + JSON.toJSONString(record.offset()));
+		logger.info("kafkaConsumer 2 开始消费，partition:" + JSON.toJSONString(record.partition()));
 	}
 
 }

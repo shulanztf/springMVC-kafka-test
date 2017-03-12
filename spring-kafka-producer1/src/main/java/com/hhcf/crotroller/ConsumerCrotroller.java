@@ -49,9 +49,6 @@ public class ConsumerCrotroller {
 		return "aaa";
 	}
 
-	// @Reference
-	// private UserService userService;
-
 	@RequestMapping("/getDubboServerData")
 	@ResponseBody
 	public String getDubboServerData() {
@@ -62,16 +59,24 @@ public class ConsumerCrotroller {
 	}
 
 	/**
-	 * 
+	 * kafka 分组消费
 	 * @return String
 	 */
 	@RequestMapping("/goIndex")
 	@ResponseBody
-	public String goIndex() {
-		// Object resultBean = testRegistryService.setDate("15456235896");
-		// System.out.println(JSON.toJSONString(resultBean));
-		// return JSON.toJSONString(resultBean);
+	public String sendConsumerGroups(String name) {
 		return "goIndex中文 测试";
 	}
 
 }
+
+
+
+
+
+
+
+
+
+
+

@@ -32,6 +32,18 @@ public class KafkaProducerServerImpl implements KafkaProducerServer {
 	@Autowired
 	private KafkaTemplate<String, String> kafkaTemplate;
 
+	/**
+	 * kafka分组消费
+	 * @Title: sendConsumerGroups   
+	 * @Description:  
+	 * @param: @param name      
+	 * @return: void      
+	 * @throws
+	 */
+	public void sendConsumerGroups(String name) {
+		
+	}
+	
 	@Override
 	public void sendMessage(String topic, String data) {
 		kafkaTemplate.setDefaultTopic(topic);
