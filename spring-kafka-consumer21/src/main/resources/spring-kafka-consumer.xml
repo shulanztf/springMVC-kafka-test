@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+      http://www.springframework.org/schema/beans/spring-beans.xsd 
+      http://www.springframework.org/schema/tx 
+      http://www.springframework.org/schema/tx/spring-tx.xsd 
+      http://www.springframework.org/schema/jee 
+      http://www.springframework.org/schema/jee/spring-jee.xsd 
+      http://www.springframework.org/schema/context 
+       http://www.springframework.org/schema/context/spring-context.xsd">
+
+
+	<!-- 定义consumer的参数 -->
+	<bean id="consumerProperties" class="java.util.HashMap">
+		<constructor-arg>
+			<map>
+				<entry key="bootstrap.servers" value="192.168.0.111:9092,192.168.0.112:9092,192.168.0.114:9092" />
+				<entry key="group.id" value="g2" />
+				<entry key="enable.auto.commit" value="true" />
+				<entry key="auto.commit.interval.ms" value="1000" />
+				<entry key="session.timeout.ms" value="15000" />
+				<entry key="key.deserializer"
+					value="org.apache.kafka.common.serialization.StringDeserializer" />
+				<entry key="value.deserializer"
+					value="org.apache.kafka.common.serialization.StringDeserializer" />
+			</map>
+		</constructor-arg>
+	</bean>
+
+	<!-- 创建consumerFactory bean -->
+	<bean id="consumerFactory"
+		class="org.springframework.kafka.core.DefaultKafkaConsumerFactory">
+		<constructor-arg>
+			<ref bean="consumerProperties" />
+		</constructor-arg>
+	</bean>
+
+	<!-- 实际执行消息消费的类 -->
+	<bean id="messageListernerConsumerListener" class="com.interceptors.KafkaConsumer2Listener" />
+
+	<!-- 消费者容器配置信息,多topic配置 -->
+	<bean id="ztf_containerProperties"
+		class="org.springframework.kafka.listener.config.ContainerProperties">
+		<constructor-arg value="ztfTopic" />
+		<property name="messageListener" ref="messageListernerConsumerListener" />
+	</bean>
+	<bean id="hhcf_containerProperties"
+		class="org.springframework.kafka.listener.config.ContainerProperties">
+		<constructor-arg value="hhcfTopic" />
+		<property name="messageListener" ref="messageListernerConsumerListener" />
+	</bean>
+
+	<!-- 创建messageListenerContainer,多topic配置 -->
+	<bean id="ztf_kafkaMessageListenerContainer" init-method="doStart"
+		class="org.springframework.kafka.listener.KafkaMessageListenerContainer">
+		<constructor-arg ref="consumerFactory" />
+		<constructor-arg ref="ztf_containerProperties" />
+	</bean>
+	<bean id="hhcf_kafkaMessageListenerContainer" init-method="doStart"
+		class="org.springframework.kafka.listener.KafkaMessageListenerContainer">
+		<constructor-arg ref="consumerFactory" />
+		<constructor-arg ref="hhcf_containerProperties" />
+	</bean>
+
+</beans>
