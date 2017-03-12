@@ -16,7 +16,7 @@
 		<constructor-arg>
 			<map>
 				<entry key="bootstrap.servers" value="192.168.0.111:9092,192.168.0.112:9092,192.168.0.114:9092" />
-				<entry key="group.id" value="0" />
+				<entry key="group.id" value="g2" />
 				<entry key="enable.auto.commit" value="true" />
 				<entry key="auto.commit.interval.ms" value="1000" />
 				<entry key="session.timeout.ms" value="15000" />
@@ -37,7 +37,7 @@
 	</bean>
 
 	<!-- 实际执行消息消费的类 -->
-	<bean id="messageListernerConsumerListener" class="com.interceptors.KafkaConsumerListener" />
+	<bean id="messageListernerConsumerListener" class="com.interceptors.KafkaConsumer2Listener" />
 
 	<!-- 消费者容器配置信息,多topic配置 -->
 	<bean id="ztf_containerProperties"

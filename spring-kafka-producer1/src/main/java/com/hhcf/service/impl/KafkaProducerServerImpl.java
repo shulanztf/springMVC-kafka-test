@@ -80,7 +80,7 @@ public class KafkaProducerServerImpl implements KafkaProducerServer {
 		logger.info("消息中间件：kafka 生产端：" + key + ";" + valueString + ";" + ifPartition + ";" + partitionNum);
 
 		ListenableFuture<SendResult<String, String>> result = null;
-		for (int i = 0; i < 3; i++) {
+		for (int i = 0; i < 1; i++) {
 			if (ifPartition.equals("0")) {
 				// 表示使用分区
 				int partitionIndex = getPartitionIndex(key, partitionNum);

@@ -14,8 +14,8 @@ import com.alibaba.fastjson.JSON;
  * @Since:2017年2月23日 下午4:54:13
  * @Version:1.0
  */
-public class KafkaConsumerListener implements MessageListener<String, String> {
-	protected final Logger logger = Logger.getLogger(KafkaConsumerListener.class);
+public class KafkaConsumer1Listener implements MessageListener<String, String> {
+	protected final Logger logger = Logger.getLogger(KafkaConsumer1Listener.class);
 
 	/**
 	 * 监听器自动执行该方法 消费消息 自动提交offset 执行业务代码 （high level api
